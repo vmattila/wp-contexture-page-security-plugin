@@ -3,8 +3,8 @@ Contributors: Contexture Media, Matt VanAndel
 Donate link: http://www.contextureintl.com/
 Tags: security, permissions, users, groups, page, post, members, restricted
 Requires at least: 3.3
-Tested up to: 3.4
-Stable tag: 1.5.8
+Tested up to: 3.5
+Stable tag: 1.5.9-dev
 
 Allows admins to create user groups and set access restrictions for any post, page or section.
 
