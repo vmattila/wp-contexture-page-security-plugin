@@ -100,12 +100,12 @@ class CTXPS_Security{
         }else{
             //Do this only if user is not an admin, or if this is the blog page, category page, tag page, or feed (and isnt an admin page)
             if( !current_user_can('edit_others_posts') && ( is_home() || is_category() || is_tag() || is_tax() || is_feed() || is_author() || is_search() || is_archive() )  && !is_admin()) {
-                foreach($content as $post->key => $post->value){
+                foreach($content as $postKey => $postValue){
 
                     /**Groups that this user is a member of*/
                     $useraccess = CTXPS_Queries::get_user_groups($current_user->ID);
                     /**Groups required to access this post*/
-                    $pagereqs = self::get_post_protection($post->value->ID);
+                    $pagereqs = self::get_post_protection($postValue->ID);
                     /**Term groups required to access this post - default is false (no protection) */
                     $termreqs = false;
 
@@ -121,7 +121,7 @@ class CTXPS_Security{
                         //NOT ALLOWED TO ACCESS!!
                         if(!$secureallowed){
                             //If we're NOT allowed to access this page
-                            unset($content[$post->key]);
+                            unset($content[$postKey]);
                         }
                     }
 
@@ -172,12 +172,12 @@ class CTXPS_Security{
             }
 
             //Loop through the content array
-            foreach($content as $post->key => $post->value){
+            foreach($content as $postKey => $postValue){
 
                 //Get groups that this user is a member of
                 $useraccess = CTXPS_Queries::get_user_groups($current_user->ID);
                 //Get groups required to access this page
-                $pagereqs = self::get_post_protection($post->value->ID);
+                $pagereqs = self::get_post_protection($postValue->ID);
 
                 //So long as $pagereqs is anything but false
                 if(!!$pagereqs){
@@ -189,14 +189,14 @@ class CTXPS_Security{
                         //If we're allowed to access this page
                     }else{
                         //If we're NOT allowed to access this page
-                        unset($content[$post->key]); //Remove content from array
+                        unset($content[$postKey]); //Remove content from array
                     }
                 }
 
                 //If this is an AD page, strip it too
                 if($dbOpts['ad_msg_usepages']==='true'){
-                    if($post->value->ID==$dbOpts['ad_page_auth_id'] || $post->value->ID==$dbOpts['ad_page_anon_id']){
-                        unset($content[$post->key]);
+                    if($postValue->ID==$dbOpts['ad_page_auth_id'] || $postValue->ID==$dbOpts['ad_page_anon_id']){
+                        unset($content[$postKey]);
                     }
                 }
             }
