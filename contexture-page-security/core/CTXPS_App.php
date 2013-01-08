@@ -44,6 +44,8 @@ class CTXPS_App{
      */
     public static function help_init(){
         global $pagenow;
+		
+		if (!function_exists('get_current_screen')) { return; }
 
         $post_types = get_post_types();
         $taxonomies = get_taxonomies();
